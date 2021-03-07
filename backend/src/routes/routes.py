@@ -1,11 +1,12 @@
+from ..controllers.FlightController import FlightController
+
 class ApiRouter():
     def __init__(self):
-        self.api = None
+        self.flightController = FlightController()
 
     def getRoutes(self, app):
-
         @app.get("/flights/")
         async def getFlights():
-            return { "message": "yeah!" }
+            return self.flightController.getFlights()
 
     

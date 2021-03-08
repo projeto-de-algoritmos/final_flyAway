@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <v-app>
+        <v-app-bar
+        app
+        dense
+        color="purple"
+        dark>
+        <div class="d-flex align-center">
+            <v-icon class="mr-2">mdi-briefcase-search-outline</v-icon>
+            <h2>Fly Away</h2>
+        </div>
+        <v-spacer></v-spacer>
+        </v-app-bar>
+
+        <v-main>
+            <Schedule/>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Schedule from './views/Schedule';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: 'App',
+    components: {
+        Schedule,
+    },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+    .v-application {
+        font-family: 'JetBrains Mono', monospace;
+    }
 </style>

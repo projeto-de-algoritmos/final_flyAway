@@ -1,0 +1,2 @@
+class FlightService:
+    pass

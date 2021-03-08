@@ -10,7 +10,7 @@
 
             <v-overlay 
                 absolute
-                :value="loading">
+                :value="loadingPage">
                 <div class="d-flex flex-column align-center">
                     <v-progress-circular v-if="loadingPage" indeterminate size="64" />
                 </div>

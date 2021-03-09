@@ -1,0 +1,20 @@
+{
+    "configurations": [
+      {
+        "name": "Docker: Python - FastApi",
+        "type": "docker",
+        "request": "launch",
+        "preLaunchTask": "docker-run: debug",
+        "python": {
+          "pathMappings": [
+            {
+              "localRoot": "${workspaceFolder}",
+              "remoteRoot": "/usr/app"
+            }
+          ],
+          "projectType": "fastapi"
+        }
+      }
+    ]
+  }
+  

@@ -7,40 +7,51 @@ class FlightService():
 
 
     def getFlights(self, inBound, outBound) -> List:
-        flights = []
+        """Função que gera os nodes
+
+        Args:
+            inBound (String): voo de retorno
+            outBound ([type]): voo de ida
+
+        Returns:
+            List: callback da função
+        """
+        nodes = []
+        edges = []
         requestData = self.apiConnection.connect(inBound, outBound)
 
-        for flight in requestData.Quotes:
-            flights.append({
+        for flight in requestData['Quotes']:
+            nodes.append({
                 "QuoteId": flight['QuoteId'],
                 "Cost": flight['MinPrice'],
-                "Origin": self.findById(requestData.Places, flight.InboundLeg['OriginId'], 'PlaceId', 'Name'),
-                "Destiny": self.findById(requestData.Places, flight.InboundLeg['DestinationId'], 'PlaceId', 'Name')
+                "Origin": self.findById(requestData['Places'], flight['OutboundLeg']['OriginId'], 'PlaceId'),
+                "Destiny": self.findById(requestData['Places'], flight['OutboundLeg']['DestinationId'], 'PlaceId')
             })
-        
-        return flights
+
+        edges = self.createEdges(nodes)
+
+        return {
+            "nodes": nodes,
+            "edges": edges
+        }
     
-    def findById(arr: list, id: int, foreignKey: str, key: str):
+    def findById(self, arr: list, id: int, foreignKey: str):
         query = ""
-        for id in arr:
-            if id == arr[foreignKey]:
-                query = arr[key]
-        
-        return query
+        for node in arr:
+            if node['PlaceId'] == id:
+                query = node['Name']
+                return query 
 
-    def createNodes(self, graph):
-        nodes = [ node for node in graph ]
-
-        return nodes
 
     def createEdges(self, graph):
-        edgeList = []
+        edges = []
 
         for node in graph:
-            edgeList.append({
-                "from": graph.get('OriginId'),
-                "to": graph.get('DestinationId')
+            edges.append({
+                "from": node['Origin'],
+                "to": node['Destiny'],
+                "Cost": node['Cost']
             })
 
-        return edgeList
+        return edges
     

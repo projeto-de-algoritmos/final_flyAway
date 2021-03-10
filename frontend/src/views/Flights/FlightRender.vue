@@ -1,12 +1,12 @@
 <template>
     <section id="flight-render-section">
         <v-card id="network-card">
-            <Network
+            <network
                 ref="network"
                 :nodes="nodes"
                 :edges="edges"
                 :options="options">
-            </Network>
+            </network>
 
             <v-overlay 
                 absolute
@@ -20,9 +20,17 @@
 </template>
 
 <script>
-// import { Network } from "vue-vis-network";
+import { Network } from "vue-vis-network";
+import FlightService from "../../service/FlightService";
+import { mapActions, mapState } from "vuex"
+
+const flightService = new FlightService();
 
 export default {
+    components: {
+        'network': Network
+    },
+
     data() {
         return {
             loadingPage: false,
@@ -33,8 +41,31 @@ export default {
             },
             edges: {
                 arrows: 'to'
-            }
+            },
+            messageError: undefined
         },
+        }
+    },
+
+    computed: {
+        ...mapState(['nodes', 'edges'])
+    },
+
+    methods: {
+        ...mapActions(['setNodes', 'setEdges']),
+        async getFlights(outBound, inBound) {
+            this.loadingPage = true
+            try {
+                const response = await flightService.getFlights(outBound, inBound);
+                this.setNodes(response.data.nodes);
+                this.setEdges(response.data.edges);
+                this.loadingPage = false;
+            }
+            catch (error) {
+                this.messageError = error.message
+                throw error;
+            }
+            this.loadingPage = false;
         }
     }
 }

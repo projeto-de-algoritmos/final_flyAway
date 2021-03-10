@@ -3,12 +3,22 @@
         <div class="pa-3 left-side">
             <v-text-field
                 clearable
-                v-model="local.origin"
+                v-model="outBound"
                 label="Local de origem" />
+            
             <v-text-field
                 clearable
-                v-model="local.destination"
+                v-model="inBound"
                 label="Local de destino" />
+
+            <v-btn
+                class="mx-2"
+                dark
+                color="purple"
+                @click="getFlights()">
+                <h3>Procurar</h3>
+                <v-icon>mdi-airplane-takeoff</v-icon>
+            </v-btn>
         </div>
     </section>
 </template>
@@ -17,14 +27,17 @@
 export default {
     data() {
         return {
-            local: {
-                origin: undefined,
-                destination: undefined
-            },
+            outBound: "",
+            inBound: ""
         }
     },
     methods: {
-
+        getFlights() {
+            this.$emit('selectedFlights', {
+                outBound: this.outBound,
+                inbound: this.inbound
+            })
+        }
     },
     computed: {
     },

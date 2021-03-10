@@ -7,33 +7,32 @@ class FlightService():
 
 
     def getFlights(self, outBound, inBound) -> List:
-        """Função que gera os nodes
-
-        Args:
-            inBound (String): voo de retorno
-            outBound ([type]): voo de ida
-
-        Returns:
-            List: callback da função
-        """
         nodes = []
         edges = []
         requestData = self.apiConnection.connect(outBound, inBound)
 
-        for flight in requestData['Quotes']:
-            nodes.append({
-                "QuoteId": flight['QuoteId'],
-                "Cost": flight['MinPrice'],
-                "Origin": self.findById(requestData['Places'], flight['OutboundLeg']['OriginId'], 'PlaceId'),
-                "Destiny": self.findById(requestData['Places'], flight['OutboundLeg']['DestinationId'], 'PlaceId')
-            })
-
-        edges = self.createEdges(nodes)
+        nodes = self.getPlaces(requestData)
+        edges = self.createEdges(requestData)
 
         return {
             "nodes": nodes,
             "edges": edges
         }
+
+    def getPlaces(self, requestData):
+        places = []
+
+        for node in requestData['Places']:
+            if node['Type'] == "Station":
+                places.append({
+                    "placeId": node['PlaceId'],
+                    "cityName": node['CityName'],
+                    "cityIdStr": node['CityId'],
+                    "name": node['Name'],
+                    "country": node['CountryName']
+                })
+
+        return places
     
     def findById(self, arr: list, id: int, foreignKey: str):
         query = ""
@@ -43,14 +42,15 @@ class FlightService():
                 return query 
 
 
-    def createEdges(self, graph):
+    def createEdges(self, requestData):
         edges = []
 
-        for node in graph:
+        for quote in requestData['Quotes']:
+            edge = (quote['OutboundLeg']['OriginId'], quote['OutboundLeg']['DestinationId'], quote['MinPrice'])
             edges.append({
-                "from": node['Origin'],
-                "to": node['Destiny'],
-                "Cost": node['Cost']
+                "from": edge[0],
+                "to": edge[1],
+                "cost": edge[2]
             })
 
         return edges

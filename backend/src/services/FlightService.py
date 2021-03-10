@@ -6,7 +6,7 @@ class FlightService():
         self.apiConnection = ApiConnection()
 
 
-    def getFlights(self, inBound, outBound) -> List:
+    def getFlights(self, outBound, inBound) -> List:
         """Função que gera os nodes
 
         Args:
@@ -18,7 +18,7 @@ class FlightService():
         """
         nodes = []
         edges = []
-        requestData = self.apiConnection.connect(inBound, outBound)
+        requestData = self.apiConnection.connect(outBound, inBound)
 
         for flight in requestData['Quotes']:
             nodes.append({

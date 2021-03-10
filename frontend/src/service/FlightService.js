@@ -5,17 +5,13 @@ class FlightService extends Connection {
         super();
     }
 
-    async getFlightById(id) {
-        return await this.client.get(`/flight/${id}`);
+    async getFlights(inbound = "", outBound = "") {
+        const outBoundQuery = outBound ? `?outBound=${outBound}` : ""
+        const inBoundQuery = inbound ? `&inbound=${inbound}` : ""
+        
+        return await this.client.get(`/flight/list${outBoundQuery}${inBoundQuery}`)
     }
 
-    async getFlights() {
-        return await this.client.get("/flight/list/")
-    }
-
-    async getFlightsByOriginId(originId) {
-        return await this.client.get(`/flight/info/${originId}`);
-    }
 }
 
 export default FlightService;

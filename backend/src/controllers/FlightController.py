@@ -7,8 +7,14 @@ class FlightController():
     def __init__(self):
         self.flightService = FlightService()
 
-    def getFlights(self,  outBound: str, inBound: str) -> List:
+    def getFlights(self, outBound: str, inBound: str) -> List:
         try:
             return self.flightService.getFlights(outBound, inBound)
+        except Exception:
+            raise HTTPException(status_code=404, detail=Exception)
+
+    def getCountry(self) -> List:
+        try:
+            return self.flightService.getCountry()
         except Exception:
             raise HTTPException(status_code=404, detail=Exception)

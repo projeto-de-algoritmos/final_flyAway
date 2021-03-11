@@ -1,15 +1,15 @@
 from typing import List
-from ..configs.ApiConnection import ApiConnection
+from ..configs.ApiConnection import SkyscannerFlights, SkyscannerCountries
 
 class FlightService():
     def __init__(self):
-        self.apiConnection = ApiConnection()
-
+        self.skyscannerFlights = SkyscannerFlights()
+        self.skyscannerCountries = SkyscannerCountries()
 
     def getFlights(self, outBound, inBound) -> List:
         nodes = []
         edges = []
-        requestData = self.apiConnection.connect(outBound, inBound)
+        requestData = self.skyscannerFlights.connect(outBound, inBound)
 
         nodes = self.getPlaces(requestData)
         edges = self.createEdges(requestData)
@@ -19,28 +19,33 @@ class FlightService():
             "edges": edges
         }
 
+    def getCountry(self) -> List:
+        countries = []
+        requestData = self.skyscannerCountries.connect()
+        
+        for node in requestData['Countries']:
+            countries.append({
+                "name": node['Name'], "code": node['Code']
+            })
+
+        return countries
+
+
     def getPlaces(self, requestData):
         places = []
 
         for node in requestData['Places']:
             if node['Type'] == "Station":
                 places.append({
-                    "placeId": node['PlaceId'],
+                    "id": node['PlaceId'],
                     "cityName": node['CityName'],
                     "cityIdStr": node['CityId'],
                     "name": node['Name'],
-                    "country": node['CountryName']
+                    "country": node['CountryName'],
+                    "label": f'{node["CityName"]} - { node["IataCode"]}'
                 })
 
         return places
-    
-    def findById(self, arr: list, id: int, foreignKey: str):
-        query = ""
-        for node in arr:
-            if node['PlaceId'] == id:
-                query = node['Name']
-                return query 
-
 
     def createEdges(self, requestData):
         edges = []
@@ -50,7 +55,7 @@ class FlightService():
             edges.append({
                 "from": edge[0],
                 "to": edge[1],
-                "cost": edge[2]
+                "label": str(edge[2])
             })
 
         return edges

@@ -5,13 +5,13 @@ import Vuex from 'vuex';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    states: {
+    state: {
         nodes: [],
         edges: []
     },
     mutations: {
         setNodes(state, nodes) {
-            state.nodes = nodes
+            state.nodes = nodes;
         },
         setEdges(state, edges) {
             state.edges = edges;

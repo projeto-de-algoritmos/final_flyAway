@@ -1,8 +1,8 @@
 <template>
     <section id="home-section">
-        <div class="d-flex pa-4">
-            <flight-search />
-            <flight-render />
+        <div class="d-flex graph-container pa-4">
+            <flight-search @selectedFlights="updateData"/>
+            <flight-render ref="render" />
         </div>
     </section>
 </template>
@@ -16,18 +16,26 @@ export default {
         'flight-search' : FlightSearch,
         'flight-render' : FlightRender
     },
-
-    data() {
-        return {
-            
+    methods: {
+        async updateData({outBound, inBound}) {
+            await this.$refs.render.getFlights({outBound, inBound})
         }
     },
-    computed: {
 
+    data() {
+        return {}
     },
 }
 </script>
 
-<style>
+<style lang="scss">
+#home-section {
+    height: 100%;
+    display: flex;
 
+    .graph-container {
+        overflow: hidden;
+        flex-grow: 1;
+    }
+}
 </style>

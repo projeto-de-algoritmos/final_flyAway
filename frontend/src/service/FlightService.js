@@ -5,11 +5,15 @@ class FlightService extends Connection {
         super();
     }
 
-    async getFlights(inbound = "", outBound = "") {
+    async getFlights(inBound = "", outBound = "") {
         const outBoundQuery = outBound ? `?outBound=${outBound}` : ""
-        const inBoundQuery = inbound ? `&inbound=${inbound}` : ""
+        const inBoundQuery = inBound ? `&inBound=${inBound}` : ""
         
-        return await this.client.get(`/flight/list${outBoundQuery}${inBoundQuery}`)
+        return await this.client.get(`/flight/list/${outBoundQuery}${inBoundQuery}`)
+    }
+
+    async getCountry() {
+        return await this.client.get(`/country/list/`)
     }
 
 }

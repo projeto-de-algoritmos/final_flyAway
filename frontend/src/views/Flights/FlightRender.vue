@@ -30,20 +30,25 @@ export default {
     components: {
         'network': Network
     },
-
     data() {
         return {
             loadingPage: false,
-            message: undefined,
             options: {
-            nodes: {
-                borderWidth: 2
-            },
-            edges: {
-                arrows: 'to'
+                nodes: {
+                    borderWidth: 2
+                },
+                edges: {
+                    length: 400                    
+                },
+                physics: {
+                    enabled: true,
+                    solver: "repulsion",
+                    repulsion: {
+                        nodeDistance: 400
+                    }
+                }
             },
             messageError: undefined
-        },
         }
     },
 
@@ -53,7 +58,8 @@ export default {
 
     methods: {
         ...mapActions(['setNodes', 'setEdges']),
-        async getFlights(outBound, inBound) {
+        
+        async getFlights({outBound, inBound}) {
             this.loadingPage = true
             try {
                 const response = await flightService.getFlights(outBound, inBound);
@@ -67,13 +73,16 @@ export default {
             }
             this.loadingPage = false;
         }
-    }
+    },
 }
 </script>
 
 <style lang="scss">
-    
-    .network-card {
+#flight-render-section {
+    width: 100%;
+    flex-grow: 1;
+    position: relative;
+    #network-card {
         height: 100%;
         width: 100%;
         > div {
@@ -83,8 +92,9 @@ export default {
                 max-height: calc(100vh - 110px) !important;
             }
         }
+        .vis-network {
+            min-height: 650px !important;
+        }
     }
-    .vis-network {
-        min-height: 650px !important;
-    }
+}
 </style>

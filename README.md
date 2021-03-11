@@ -18,7 +18,10 @@ daqui de Brasília para São Paulo e só então ir para Lisboa. Mas como poderia
 <p align="justify">Portanto, o objetivo deste projeto é atender ao módulo de grafos 2 com o tema de agendamento de voos. Trata-se de um webapp que utiliza uma API de voos e com base nos dados traçamos qual o melhor percurso em termos de custo e distância de um local para outro.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+![Image1](./img/p1.png)
+![Image2](./img/p2.png)
+![Image3](./img/p3.png)
 
 ## Instalação
 
@@ -28,12 +31,20 @@ Através do container docker terá acesso ao backend configurado, basta ter inst
 
 **Linguagem**: javascript<br>
 **Framework**: Vue.js v2<br>
-É necessário ter o npm ou yarn para poder rodar o frontend.
+É necessário ter o npm ou yarn para poder rodar o frontend. Após isto, é necessário que seja feita a instalação do Vue e do Vue-CLI.
+
+
 
 ## Uso 
+#### Backend
 Execute o container do backend com o comando:
 ```sh
 $ docker-compose up --build
+```
+#### Frontend
+Instale os requisitos do projeto:
+```sh
+$ npm install
 ```
 
 E para rodar o frontend basta executar em outro terminal o seguinte comando:
@@ -50,3 +61,6 @@ http://localhost:8080/
 <p align="justify">Na tela principal basta inserir o local de onde deseja partir para o destino, então o algoritmo de Dijkstra irá retornar uma callback para ser renderizado em um canvas, informando os dados dos voos.
 
 
+## Video
+
+[<img src="https://img.youtube.com/vi/WkiRC1NKqzQ/sddefault.jpg">](https://youtu.be/WkiRC1NKqzQ)

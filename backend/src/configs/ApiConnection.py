@@ -2,7 +2,7 @@ import requests
 import json
 
 class SkyscannerFlights():
-   
+
     def connect(self, outBound, inBound):
         url = f'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/BRL/pt-BR/{outBound}/{inBound}/anytime/anytime'
 
@@ -15,7 +15,7 @@ class SkyscannerFlights():
         return response.json()
 
 class SkyscannerCountries():
-   
+
     def connect(self):
         url = f'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/pt-BR'
 

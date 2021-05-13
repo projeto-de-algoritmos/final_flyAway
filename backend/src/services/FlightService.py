@@ -1,5 +1,7 @@
 from typing import List
 from ..configs.ApiConnection import SkyscannerFlights, SkyscannerCountries
+from ..utils.scripts import mergeSort
+
 
 class FlightService():
     def __init__(self):
@@ -21,14 +23,18 @@ class FlightService():
 
     def getCountry(self) -> List:
         countries = []
+        sorted_countries = []
         requestData = self.skyscannerCountries.connect()
-        
+
         for node in requestData['Countries']:
             countries.append({
-                "name": node['Name'], "code": node['Code']
+                "name": node['Name'],
+                "code": node['Code']
             })
 
-        return countries
+        sorted_countries = mergeSort(countries)
+
+        return sorted_countries
 
 
     def getPlaces(self, requestData):
@@ -55,7 +61,7 @@ class FlightService():
             edges.append({
                 "from": edge[0],
                 "to": edge[1],
-                "label": str(edge[2])
+                "label": f'R$ {str(edge[2])}'
             })
 
         return edges

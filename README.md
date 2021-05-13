@@ -1,7 +1,7 @@
 # Fly Away
 
 **Número da Lista**: 13<br>
-**Conteúdo da Disciplina**: Grafos2<br>
+**Conteúdo da Disciplina**: Final<br>
 
 ## Alunos
 |Matrícula | Aluno |
@@ -19,9 +19,14 @@ daqui de Brasília para São Paulo e só então ir para Lisboa. Mas como poderia
 
 ## Screenshots
 
+## v1 - FlyAway
 ![Image1](./img/p1.png)
 ![Image2](./img/p2.png)
 ![Image3](./img/p3.png)
+
+## v2 - FlyAway
+
+![Image4](./img/p4.png)
 
 ## Instalação
 
@@ -58,9 +63,4 @@ http://localhost:8080/
 
 ```
 
-<p align="justify">Na tela principal basta inserir o local de onde deseja partir para o destino, então o algoritmo de Dijkstra irá retornar uma callback para ser renderizado em um canvas, informando os dados dos voos.
-
-
-## Video
-
-[<img src="https://img.youtube.com/vi/WkiRC1NKqzQ/sddefault.jpg">](https://youtu.be/WkiRC1NKqzQ)
+<p align="justify">Na tela principal basta inserir o local de onde deseja partir para o destino, então o algoritmo de Dijkstra irá retornar uma callback para ser renderizado em um canvas, informando os dados dos vôos.

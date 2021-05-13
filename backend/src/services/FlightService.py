@@ -61,8 +61,7 @@ class FlightService():
             edges.append({
                 "from": edge[0],
                 "to": edge[1],
-                "label": f'R$ {str(edge[2])}'
+                "label": str(edge[2])
             })
 
         return edges
-    

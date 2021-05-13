@@ -57,7 +57,7 @@ export default {
             outBound: "",
             inBound: "",
             loading: false,
-            messageError: undefined
+            messageError: undefined,
         }
     },
     methods: {

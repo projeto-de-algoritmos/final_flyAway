@@ -1,5 +1,6 @@
 <template>
     <section id="flight-render-section">
+        <cheapest-flight :cheapest=cheapest />
         <v-card id="network-card">
             <network
                 ref="network"
@@ -22,13 +23,16 @@
 <script>
 import { Network } from "vue-vis-network";
 import FlightService from "../../service/FlightService";
+import CheapestFlight from './CheapestFlight';
+
 import { mapActions, mapState } from "vuex"
 
 const flightService = new FlightService();
 
 export default {
     components: {
-        'network': Network
+        'network': Network,
+        'cheapest-flight' : CheapestFlight
     },
     data() {
         return {
@@ -38,7 +42,7 @@ export default {
                     borderWidth: 2
                 },
                 edges: {
-                    length: 400                    
+                    length: 400
                 },
                 physics: {
                     enabled: true,
@@ -48,7 +52,8 @@ export default {
                     }
                 }
             },
-            messageError: undefined
+            messageError: undefined,
+            cheapest: undefined,
         }
     },
 
@@ -58,13 +63,14 @@ export default {
 
     methods: {
         ...mapActions(['setNodes', 'setEdges']),
-        
+
         async getFlights({outBound, inBound}) {
             this.loadingPage = true
             try {
                 const response = await flightService.getFlights(outBound, inBound);
                 this.setNodes(response.data.nodes);
                 this.setEdges(response.data.edges);
+                this.getCheapest();
                 this.loadingPage = false;
             }
             catch (error) {
@@ -72,6 +78,16 @@ export default {
                 throw error;
             }
             this.loadingPage = false;
+        },
+
+        getCheapest() {
+            let temp = this.edges[0];
+            for (let edge in this.edges) {
+                if (parseInt(temp.label) > parseInt(edge.label)) {
+                    temp = edge; // vai receber a aresta
+                }
+            }
+            this.cheapest = temp;
         }
     },
 }
